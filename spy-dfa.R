@@ -15,7 +15,10 @@ fractalBlock = DFA(coredata(SPY_CLOSE))
 DFA.walk <- fractalBlock
 print(DFA.walk)
 
+#n <- length(SPY_CLOSE); log_returns_SPY_CLOSE <- log(SPY_CLOSE[-n]/SPY_CLOSE[-1])
 log_returns_SPY_CLOSE = diff(log(SPY_CLOSE))
+
+
 fractalBlock = DFA(coredata(log_returns_SPY_CLOSE), detrend="poly2")
 DFA.walk <- fractalBlock
 print(DFA.walk)
