@@ -6,8 +6,12 @@
 library(quantmod)
 library(fractal)
 
-getSymbols("SPY",src="google")
+spy = getSymbols("SPY",src="google")
 
-chartSeries(SPY, theme="white", TA="addVo();addBBands();addCCI()")
+chartSeries(spy, theme="white", TA="addVo();addBBands();addCCI()")
 addOpCl <- newTA(OpCl,col='green',type='h')
 addOpCl()
+
+
+shanghai = getSymbols("000001.SS", auto.assign=FALSE)
+chartSeries(shanghai, theme="white", TA="addVo();addBBands();addCCI()")
