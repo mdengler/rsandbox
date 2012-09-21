@@ -40,5 +40,18 @@ plot(trafficdata)
 ## r <- ggplot(ToothGrowth, aes(y=len, x=factor(dose)))
 ## r$background.fill = "cornsilk"
 ## r + geom_boxplot(aes(colour=supp)) + stat_summary(aes(group=supp),fun="mean_cl_normal",colour="red",geom="smooth",linetype=3,size=1) + stat_summary(aes(group=supp),fun="mean_cl_normal",colour="blue",geom="point",size=4)
-
 ## grid.gedit("label", gp=gpar(fontsize=10, col="red")) # color the axis labels
+
+# another ggplot2 example:
+# http://stackoverflow.com/questions/4733182/how-to-highlight-time-ranges-on-a-plot
+## p <- ggplot(data=diamonds, aes(x=price, y=carat)) + geom_line(aes(color=color))
+## rect <- data.frame (
+##     xmin=5000, xmax=10000, ymin=-Inf, ymax=Inf)
+## p + geom_rect(data=rect, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax), color="grey20", alpha=0.5, inherit.aes = FALSE)
+## Also note that ymin and ymax could be set to -Inf and Inf with ease.
+
+# might want to use par("usr") to get ylim of main plot for overlay plots:
+# http://stackoverflow.com/questions/8415220/how-to-get-the-range-ylim-of-a-plot
+## my_plot <- boxplot(a ~ b, outline=F)
+## But the parameters inside my_plot only concern statistical information but not plotting.
+## UPDATE: Nick's @nick-sabbe suggestion (par("yaxp")[1:2]) partially works. It returns properly the value of each of the labels in each extreme on the Y-axis. The correct way is to use par('usr')
