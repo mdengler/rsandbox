@@ -2,11 +2,8 @@
 
 library(quantmod)
 
-# create sample data
-getSymbols("SPY", from="1900-01-01")
-
-#save
-#write.zoo(SPY, file="SPY.csv", sep=",")
+# getSymbols("SPY", from="1900-01-01")
+# write.zoo(SPY, file="SPY.csv", sep=",")
 
 # set symbol lookup
 setSymbolLookup(SPY=list(src="csv",format="%Y-%m-%d"))
