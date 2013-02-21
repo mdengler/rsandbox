@@ -66,6 +66,17 @@ plotCircular(area1=spy$SPY.Close,labels=spy$SPY.Month,dp=0)
 plot(ts(coredata(spyml)[,1], frequency=12))
 plot(stl(ts(coredata(spyml)[,1], frequency=12), "periodic"))
 
+y = coredata(spyml)[,1]
+x = index(spyml)
+plot(stl(ts(y, frequency=12), "periodic"), x)
+plot(stl(zooreg(y, frequency=12), "periodic"), x)
+
+n = 48
+plot(stl(ts(tail(y, n=n), frequency=12), "periodic"), tail(x, n=n))
+
+
+#http://www.math.mcmaster.ca/peter/s3n03/s3n03_0203/classnotes/tsandlaginr.html
+lag.plot(y)
 
 
 #setDefaults(chartSeries, theme="white")
