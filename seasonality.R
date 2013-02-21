@@ -5,6 +5,7 @@
 
 library(quantmod)
 library(season)
+library(PerformanceAnalytics)
 
 # getSymbols("SPY", from="1900-01-01")
 # write.zoo(SPY, file="SPY.csv", sep=",")
@@ -24,6 +25,8 @@ spym = merge(spyml, spymlm)
 
 aggregate(spyml, list(spymlm), mean)
 
+## > colnames(spym)
+## [1] "monthly.returns" "spymlm"
 
 ## > aggregate(spyml, list(spymlm), mean)
 
@@ -50,13 +53,20 @@ aggregate(spyml, list(spymlm), mean)
 ##  06     :1   Max.   : 0.0044248
 
 
+chart.TimeSeries(spyml)
+
+
+
 plotCircular(area1=spyml,labels=spymlm,dp=0)
 
 spy$SPY.Month = format(time(spy$SPY.Close), "%m")
 
 plotCircular(area1=spy$SPY.Close,labels=spy$SPY.Month,dp=0)
 
-plot(stl(spy$SPY.CloseMonthly, s.window=30))
+plot(ts(coredata(spyml)[,1], frequency=12))
+plot(stl(ts(coredata(spyml)[,1], frequency=12), "periodic"))
+
+
 
 #setDefaults(chartSeries, theme="white")
 barChart(spy, theme="white")
@@ -88,3 +98,54 @@ lines(fit,col=2)
 #daysoftheweek<-c('Monday','Tuesday','Wednesday','Thursday','Friday', 'Saturday','Sunday')
 #weekfreq<-table(round(runif(100,min=1,max=7)))
 #plotCircular(area1=weekfreq,labels=daysoftheweek,dp=0)
+
+
+
+# other ideas
+#from http://www.designandanalytics.com/recession-beard-time-series-in-R-part-2
+
+library(XML)         # read.zoo
+library(xts)         # our favorite time series
+library(tis)         # recession shading.
+library(ggplot2)     # artsy plotting
+library(gridExtra)   # for adding a caption
+library(timeDate)    # for our prediction at the end
+
+# Get the data from the web as a zoo time series
+URL <- 'http://robjhyndman.com/tsdldata/roberts/beards.dat'
+beard <- read.zoo(URL,
+    header=FALSE,
+    index.column=0,
+    skip=4,
+    FUN=function(x) as.Date(as.yearmon(x) + 1865))
+# Last line is tricky, check here:
+#http://stackoverflow.com/questions/10730685/possible-to-use-read-zoo-to-read-an-unindexed-time-series-from-html-in-r/10730827#10730827
+
+# Put it into xts, which is a more handsome time series format.
+beardxts <- as.xts(beard)
+names(beardxts) <- "Full Beard"
+
+# Make into a data frame, for ggplotting
+beard.df <- data.frame(
+    date=as.Date(index(beardxts),format="%Y"),
+    beard=as.numeric(beardxts$'Full Beard'))
+
+# Make the plot object
+bplot <- ggplot(beard.df, aes(x=date, y=beard)) +
+    theme_bw() +
+    geom_point(aes(y = beard), colour="red", size=2) +
+    ylim(c(0,100)) +
+    geom_line(aes(y=beard), size=0.5, linetype=2) +
+    xlab("Year") +
+    ylab("Beardfulness (%)") +
+    opts(title="Percentage of American Men Fully Bearded")
+print(bplot)
+
+# Add recession shading
+bplot2 <- nberShade(bplot,
+    fill = "#C1C1FF",
+    xrange = c("1866-01-01", "1911-01-01"),
+    openShade = TRUE) # looks weird when FALSE
+
+#Plot it
+print(bplot2)
