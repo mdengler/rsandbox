@@ -23,6 +23,12 @@ spyml = monthlyReturn(spy$SPY.CloseL)
 spymlm = format(time(spyml), "%m")
 spym = merge(spyml, spymlm)
 
+
+# other ways of generating returns
+## ?Return.calculate
+## ?ROC
+## ?allReturns
+
 aggregate(spyml, list(spymlm), mean)
 
 ## > colnames(spym)
