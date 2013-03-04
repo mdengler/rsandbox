@@ -74,11 +74,27 @@ plot(stl(ts(coredata(spyml)[,1], frequency=12), "periodic"))
 
 y = coredata(spyml)[,1]
 x = index(spyml)
+
 plot(stl(ts(y, frequency=12), "periodic"), x)
-plot(stl(zooreg(y, frequency=12), "periodic"), x)
+
+stlspy = stl(zooreg(y, frequency=12), "periodic")
+plot(stlspy, x)
+
 
 n = 48
 plot(stl(ts(tail(y, n=n), frequency=12), "periodic"), tail(x, n=n))
+
+
+
+# there is a lot of periodicity here -- have I added it in?  it must already be taken into account...how?
+# how can I expose the periodicity?  FFT of the periodic component?
+
+t0 = 48
+n = 36
+plot(stl(ts(head(tail(y, n=t0), n=n), frequency=12), "periodic"), head(tail(x, n=t0), n=n))
+
+# over varying time scales, it might be possible to visually analyse the trend development and confirm the periodicity; then it might suffice to predict the trend, especially if the trend and the periodic flows seem to change at different speeds...
+
 
 
 #http://www.math.mcmaster.ca/peter/s3n03/s3n03_0203/classnotes/tsandlaginr.html
