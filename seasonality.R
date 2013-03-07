@@ -91,8 +91,13 @@ plot(stl(ts(tail(y, n=n), frequency=12), "periodic"), tail(x, n=n))
 
 t0 = 48
 n = 36
-plot(stl(ts(head(tail(y, n=t0), n=n), frequency=12), "periodic"), head(tail(x, n=t0), n=n))
 
+png(filename="seasonality-spy-_%03d_med.png", width=480, height=480) # can add type="cairo", antialias="subpixel"
+plot(stl(ts(head(tail(y, n=t0), n=12), frequency=12), "periodic"), head(tail(x, n=t0), n=12), main="Periodicity in S&P500 returns", sub="first 12 months of last four years")
+plot(stl(ts(head(tail(y, n=t0), n=24), frequency=12), "periodic"), head(tail(x, n=t0), n=24), main="Periodicity in S&P500 returns", sub="first 24 months of last four years")
+plot(stl(ts(head(tail(y, n=t0), n=36), frequency=12), "periodic"), head(tail(x, n=t0), n=36), main="Periodicity in S&P500 returns", sub="first 36 months of last four years")
+plot(stl(ts(head(tail(y, n=t0), n=t0), frequency=12), "periodic"), head(tail(x, n=t0), n=t0), main="Periodicity in S&P500 returns", sub="first 48 months of last four years")
+dev.off()
 # over varying time scales, it might be possible to visually analyse the trend development and confirm the periodicity; then it might suffice to predict the trend, especially if the trend and the periodic flows seem to change at different speeds...
 
 
