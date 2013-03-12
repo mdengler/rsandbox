@@ -7,15 +7,10 @@ library(quantmod)
 library(season)
 library(PerformanceAnalytics)
 
-# getSymbols("SPY", from="1900-01-01")
-# write.zoo(SPY, file="SPY.csv", sep=",")
 
-# set symbol lookup
 setSymbolLookup(SPY=list(src="csv",format="%Y-%m-%d", dir="data"))
-# call getSymbols(.csv) with auto.assign=FALSE
 spy <- getSymbols("SPY", auto.assign=FALSE)
 
-#spy$SPY.CloseMonthly = diff(log(spy$SPY.Close), lag=30)
 spym  = monthlyReturn(spy$SPY.Close)
 
 spy$SPY.CloseL = log(spy$SPY.Close)
@@ -61,8 +56,6 @@ aggregate(spyml, list(spymlm), mean)
 
 y = coredata(spyml)[,1]
 x = index(spyml)
-
-plot(stl(ts(y, frequency=12), "periodic"), x)
 
 stlspy = stl(zooreg(y, frequency=12), "periodic")
 plot(stlspy, x)
