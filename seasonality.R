@@ -1,6 +1,11 @@
 #!/usr/bin/env R
 # --no-restore --no-save -f $0
 
+# TODO - Extend to different data series:
+#   - Housing: http://www.moodysanalytics.com/~/media/Insight/Economic-Analysis/Housing/2012/2012-08-02-The-Varied-Cycles-of-European-Housing-Markets.ashx http://www.ecb.int/events/pdf/conferences/cppi/Andrea_Chegut.pdf?1d92e918dfc5b51a98e2c521c7d62b46
+#
+# TODO: collect the TODOs
+
 # http://stackoverflow.com/questions/8970823/how-to-load-csv-data-file-into-r-for-use-with-quantmod
 
 library(quantmod)
