@@ -8,6 +8,8 @@
 
 # http://stackoverflow.com/questions/8970823/how-to-load-csv-data-file-into-r-for-use-with-quantmod
 
+# install.packages(c("Defaults", "coda", "zoo", "TTR", "quantmod", "season", "PerformanceAnalytics"))
+
 library(quantmod)
 library(season)
 library(PerformanceAnalytics)
